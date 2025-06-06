@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAP Empresa 360°</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo VAP" class="logo">
+    <h1>Transforme sua loja em até 90 dias com o VAP EMPRESA 360°</h1>
+    <p>Consultoria Estratégica de Varejo com Marco Antonio</p>
+    <a class="btn" href="https://wa.me/5512988652198" target="_blank">Quero organizar minha loja agora 📲</a>
+  </header>
+
+  <section class="video">
+    <h2>Assista à apresentação</h2>
+    <iframe src="https://www.youtube.com/embed/B2E1lViNK9I" frameborder="0" allowfullscreen></iframe>
+  </section>
+
+  <section class="benefits">
+    <h2>Se isso acontece com você... sua loja tá pedindo socorro</h2>
+    <ul>
+      <li>✅ Sua loja fatura, mas o dinheiro some no meio do mês?</li>
+      <li>✅ Equipe travada, só funciona se você grita?</li>
+      <li>✅ Um mês bom, outro horrível?</li>
+      <li>✅ Já tentou de tudo e nada resolve?</li>
+    </ul>
+    <p><strong>Então o VAP é pra você.</strong></p>
+  </section>
+
+  <section class="testimonials">
+    <h2>Resultados de outros lojistas</h2>
+    <div class="cards">
+      <div class="card"><strong>Andreia (RS)</strong><p>+37% de crescimento com equipe engajada</p></div>
+      <div class="card"><strong>Carol (SP)</strong><p>+42% em vendas com equipe treinada</p></div>
+      <div class="card"><strong>Renato (SP)</strong><p>Redução de retrabalho, loja organizada</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© VAP EMPRESA 360° - Todos os direitos reservados</p>
+  </footer>
+</body>
+</html>
