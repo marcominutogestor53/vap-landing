@@ -1,0 +1,157 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Carro Certo - Agende com um consultor",
+        "formDescription": "description here",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Qual seu nome?"
+            },
+            {
+              "fieldLabel": "Qual seu WhatsApp para nosso consultor te chamar?",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Qual seu email de contato?"
+            },
+            {
+              "fieldLabel": "Qual carro você tem mais interesse?"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [0, 0],
+      "id": "bf782176-6c6c-488f-92da-5defc0b2f419",
+      "name": "Forms",
+      "webhookId": "acb8523e-f462-4b2f-9c43-7cdcf9533527"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=LEAD: {{ $json['Qual seu nome?'] }}\nCarro de interesse: {{ $json['Qual carro você tem mais interesse?'] }}",
+        "options": {
+          "systemMessage": "Você é um especialista e consultor que fará uma chamada para um lead que acabou de preencher um formulário demonstrando interesse em agendar uma conversa com o consultor de vendas de veículos. Crie uma mensagem curta, direta e que desperte o desejo de continuar a conversa. Retorne apenas com a mensagem que você enviaria para esse lead"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [340, 0],
+      "id": "e2709c94-5b72-4094-ad11-2f6ca5bfc5ea",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [260, 220],
+      "id": "2469fa9a-1180-43c6-bc55-2688b50926ba",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "9dJRyMU5Wh8vTOvU",
+          "name": "PRINCIPAL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "EMAILAQUI@gmail.com",
+        "subject": "Assunto",
+        "emailType": "text",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [800, 0],
+      "id": "563090b7-99d9-4820-8694-3f093ddaf01a",
+      "name": "Gmail",
+      "webhookId": "beee6d6c-bd8a-43bc-af9e-b262934bcb97",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nTRsAvK3ogpworSq",
+          "name": "CERTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "recipientPhoneNumber": "={{ $('Forms').item.json['Qual seu WhatsApp para nosso consultor te chamar?'] }}",
+        "textBody": "={{ $('AI Agent').item.json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [1060, 0],
+      "id": "7ffd4953-748c-40ae-8294-ddd4241e0614",
+      "name": "WhatsApp Business Cloud",
+      "webhookId": "9dd2c89e-b480-4210-b572-772c180942b2",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "98GYKwbQFpIG6GQq",
+          "name": "WhatsApp account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Forms": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
